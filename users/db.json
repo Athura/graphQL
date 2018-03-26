@@ -1,0 +1,6 @@
+{
+    "users": [
+        { "id": "23", "firstName": "Bill", "lastName": "Bateman", "ssoUserName": "bill.bateman@gmail.com", "age": 20 },
+        { "id": "40", "firstName": "Alex", "lastName": "Bateman", "ssoUserName": "alex.bateman@gmail.com", "age": 40 }
+    ]
+}
