@@ -4,19 +4,45 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLInt,
-    GraphQLSchema
+    GraphQLSchema,
+    GraphQLList
 } = graphql;
+
+// collection of users -> company so the user has to have a type of new GraphQLList(UserType)
+// Circular reference, to solve we need to wrap the fields in an arrow function that will return an option
+const CompanyType = new GraphQLObjectType({
+    name: 'Company',
+    fields: () => ({
+        id: { type: GraphQLString },
+        name: { type: GraphQLString },
+        description: { type: GraphQLString },
+        users: {
+            type: new GraphQLList(UserType),
+            resolve(parentValue, args){
+                return axios.get(`http://localhost:3000/companies/${parentValue.id}/users`)
+                .then(res => res.data);
+            }
+        }
+    })
+});
 
 
 const UserType = new GraphQLObjectType({
     name: 'User',
-    fields: {
+    fields: () => ({
         id: { type: GraphQLString },
         firstName: { type: GraphQLString },
         lastName: { type: GraphQLString },
         ssoUserName: { type: GraphQLString },
-        age: { type: GraphQLInt }
-    }
+        age: { type: GraphQLInt },
+        company: { 
+            type: CompanyType,
+            resolve(parentValue, args) {
+                return axios.get(`http://localhost:3000/companies/${parentValue.companyId}`)
+                .then(res => res.data)
+            }
+        }
+    })
 });
 
 //root query points to all possible entry points into a graph ql api
@@ -31,6 +57,14 @@ const RootQuery = new GraphQLObjectType({
             resolve(parentValue, args) {
                 return axios.get(`http://localhost:3000/users/${args.id}`)
                     .then(resp => resp.data);
+            }
+        },
+        company: {
+            type: CompanyType,
+            args: { id: { type: GraphQLString } },
+            resolve(parentValue, args) {
+                return axios.get(`http://localhost:3000/companies/${args.id}`)
+                .then(resp => resp.data);
             }
         }
     }
