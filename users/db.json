@@ -3,10 +3,7 @@
         { "id": "23", "firstName": "Bill", "lastName": "Bateman", "ssoUserName": "bill.bateman@gmail.com", "age": 20, "companyId": "1" },
         { "id": "40", "firstName": "Alex", "lastName": "Bateman", "ssoUserName": "alex.bateman@gmail.com", "age": 40, "companyId": "2" },
         { "id": "35", "firstName": "Jill", "lastName": "Bateman", "ssoUserName": "jill.bateman@gmail.com", "age": 76, "companyId": "2" }
-    ]
-}
-
-{
+    ],
     "companies": [
         { "id": "1", "name": "Apple", "description": "iphone" },
         { "id": "2", "name": "Google", "description": "search" }
