@@ -1,19 +1,11 @@
 {
   "users": [
     {
-      "id": "23",
-      "firstName": "Bill",
-      "lastName": "Bateman",
-      "ssoUserName": "bill.bateman@gmail.com",
-      "age": 20,
-      "companyId": "1"
-    },
-    {
       "id": "40",
       "firstName": "Alex",
       "lastName": "Bateman",
       "ssoUserName": "alex.bateman@gmail.com",
-      "age": 40,
+      "age": 10,
       "companyId": "2"
     },
     {
