@@ -5,7 +5,8 @@ const {
     GraphQLString,
     GraphQLInt,
     GraphQLSchema,
-    GraphQLList
+    GraphQLList,
+    GraphQLNonNull
 } = graphql;
 
 // collection of users -> company so the user has to have a type of new GraphQLList(UserType)
@@ -70,6 +71,38 @@ const RootQuery = new GraphQLObjectType({
     }
 });
 
+const mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        addUser: {
+            type: UserType,
+            args: {
+                //non null is like a require statement: MUST provide this value
+                firstName: { type: new GraphQLNonNull(GraphQLString) },
+                lastName: { type: new GraphQLNonNull(GraphQLString) },
+                ssoUserName: { type: new GraphQLNonNull(GraphQLString) },
+                age: { type: new GraphQLNonNull(GraphQLInt) },
+                companyId: { type: GraphQLString }
+            },
+            resolve(parentValue, { firstName, lastName, age, ssoUserName}) {
+                return axios.post('http://localhost:3000/users',{ firstName, lastName, age, ssoUserName })
+                    .then(res => res.data);
+            }
+        },
+        deleteUser: {
+            type: UserType,
+            args: {
+               id: { type: new GraphQLNonNull(GraphQLString) } 
+            },
+            resolve(parentValue, { id }) {
+                return axios.delete(`http://localhost:3000/users`, {id})
+                    .then(res => res.data);
+            }
+        }
+    }
+});
+
 module.exports = new GraphQLSchema({
-    query: RootQuery
+    query: RootQuery,
+    mutation
 });
