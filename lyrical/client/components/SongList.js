@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { Link } from 'react-router';
 
 class SongList extends Component {
     renderSongs() {
         return this.props.data.songs.map(song => {
             return(
-                <li>
+                <li key={song.id} className="collection-item" >
                     {song.title}
                 </li>
-            );
-        });
+            )
+        })
     }
 
     render() {
@@ -20,16 +21,26 @@ class SongList extends Component {
         
         return (
             <div>
-                {this.renderSongs}
+                <ul className="collection">
+                    {this.renderSongs()}
+                </ul>
+                <Link 
+                    to="/songs/new"
+                    className="btn-floating btn-large red right"
+                >
+                   <i className="material-icons">add</i> 
+                </Link>
             </div>
         );
     }
 }
 
 //make sure you have a backtick
+// use id as unique key because less likely t oget the same key
 const query = gql`
     {
         songs {
+            id
             title
         }
     }
