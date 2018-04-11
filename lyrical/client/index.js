@@ -10,8 +10,11 @@ import SongCreate from './components/SongCreate.js';
 import SongDetail from './components/SongDetail';
 import App from './components/App.js';
 
-
-const client = new ApolloClient({});
+// ramifications of using id is whenever we make a query we need to return the id of the obj
+// Find this at dev.apollodata.com/react/cache-updates.html
+const client = new ApolloClient({
+  dataIdFromObject: o => o.id
+});
 
 const Root = () => {
   return (

@@ -20,7 +20,7 @@ class LyricCreate extends Component {
                 //get this from songDetail's render method
                 songId: this.props.songId
             }
-        })
+        }).then(() => this.setState({ content: '' }));
     }
 
     render() {
@@ -39,10 +39,11 @@ class LyricCreate extends Component {
 const mutation = gql`
     mutation AddLyricToSong($content: String, $songId: ID){
         addLyricToSong(content: $content, songId: $songId) {
-        id
-        lyrics {
-            content
-        }
+            id
+            lyrics {
+                id
+                content
+            }
         }
     }
 `;
