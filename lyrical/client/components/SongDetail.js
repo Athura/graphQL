@@ -11,7 +11,8 @@ class SongDetail extends Component {
         //destructuring of this.props.data.song
         const { song } = this.props.data;
 
-        //can look at loading property or props
+        //can look at loading property or props, good to have this in a lot of places that try to read a prop.
+        //can solve undefineds
         if(!song) {
             return <div>Loading...</div>;
         }
