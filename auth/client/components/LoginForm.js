@@ -3,6 +3,7 @@ import Header from './Header';
 import AuthForm from './AuthForm';
 import mutation from '../mutations/Login';
 import query from '../queries/CurrentUser';
+import { hashHistory } from 'react-router';
 import { graphql } from 'react-apollo';
 
 class LoginForm extends Component {
@@ -10,6 +11,17 @@ class LoginForm extends Component {
         super(props);
 
         this.state = { errors: [] };
+    }
+
+    //not ideal, but this pushes a user to the dashboard if we detect that they're logged in
+    componentWillUpdate(nextProps){
+       // this.props  the old, current set of props
+       // nextProps  the next set of props that will be in place when component rerenders
+
+       if(!this.props.data.user && nextProps.data.user) {
+           //redirect to dashboard
+           hashHistory.push('/dashboard');
+       }
     }
 
     //email: email, password: password
@@ -40,4 +52,7 @@ class LoginForm extends Component {
     }
 }
 
-export default graphql(mutation)(LoginForm);
+//added query to rerender component everytime query is called
+export default graphql(query)(
+    graphql(mutation)(LoginForm)
+);

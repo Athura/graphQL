@@ -9,13 +9,13 @@ const AuthService = require('../services/auth');
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
+        //request represents the request object coming from passport, args = email and password. req = request
         signup: {
             type: UserType,
             args: {
                 email: { type: GraphQLString },
                 password: { type: GraphQLString }
             },
-            //request represents the request object coming from passport, args = email and password. req = request
             resolve(parentValue, { email, password }, req) {
                 AuthService.signup({ email, password, req });
             }
