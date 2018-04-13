@@ -25,7 +25,7 @@ const mutation = new GraphQLObjectType({
             type: UserType,
             resolve(parentValue, args, req) {
                 const { user } = req;
-                req.logout;
+                req.logout();
                 return user;
             }
         },
